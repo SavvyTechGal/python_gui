@@ -1,5 +1,5 @@
-#Documentation of Issues encountered throughout the project and how they were solved
+# Documentation of Issues encountered throughout the project and how they were solved
 
-##Issue 1 - Savana Hughes 
+## Issue 1 - Savana Hughes 
 
-##Issue 2 - Moris Goldshtein 
+## Issue 2 - Moris Goldshtein 

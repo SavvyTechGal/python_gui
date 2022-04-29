@@ -1,8 +1,8 @@
-##Technical Spec
+# Technical Spec
 
 Details the functions and classes and describes what each does.
 
-##Classes
+## Classes
 
 
-##Functions
+## Functions
