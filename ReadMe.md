@@ -1,8 +1,31 @@
 # ReadMe
 ## Project Description: 
+Music Player Gui using PyQt5
+Intended Features include:
+Play | Pause | Mute | Loop | Shuffle | Next Track | Back Track
+Song Label
+Scroll through song
+Volume Control Knobe
+Create Playlist 
+See list of playlists
+Open playlist and see tracks
+Play Playlist
+Open folder/Directory and display that inside sidebar
+
+Potential Additional Fun Features:
+Display Wave of Song 
+Select Snippet of Song as a Ringtone
+EQ
 
 
 ## Collaboration Best Practices
+Create branch for each Feature in format:
+feature/feature_name
+
+commit as you make changes to that branch 
+
+When feature is finished, Create pull request, and merge to master.
+
 
 ## Create a Virtual Env
 ```
