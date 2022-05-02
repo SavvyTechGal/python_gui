@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):
         # Generate Window
         super().__init__()
         self.setWindowTitle("Music Player")
-        self.setFixedSize(1200, 500) # CHANGE 500 BACK TO 700 AND DELETE THIS COMMENT WHEN NOT TESTING
+        self.setFixedSize(1200, 700)
 
         
         self.mainWidget = QWidget()
