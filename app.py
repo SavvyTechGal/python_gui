@@ -14,20 +14,28 @@ class MediaWidget(QWidget):
         super().__init__()
         
         # Generate Layout for Widget
-        self.mediaLayout = QHBoxLayout()
+        self.mediaLayout = QGridLayout()
         
         # Generate Buttons and attach to Layout
         self.shuffleButton = QPushButton("Press to Shuffle")
         self.shuffleButton.clicked.connect(partial(self.changeShuffling,self.shuffleButton))
-        self.mediaLayout.addWidget(self.shuffleButton)
+        self.mediaLayout.addWidget(self.shuffleButton, 0, 0)
+
+        self.rewindButton = QPushButton("Prev Song")
+        self.mediaLayout.addWidget(self.rewindButton, 0, 1)
 
         self.playPauseButton = QPushButton("Play")
         self.playPauseButton.clicked.connect(partial(self.changePlayPause,self.playPauseButton))
-        self.mediaLayout.addWidget(self.playPauseButton)
+        self.mediaLayout.addWidget(self.playPauseButton, 0, 2)
+
+        self.fastForwardButton = QPushButton("Next Song")
+        self.mediaLayout.addWidget(self.fastForwardButton, 0, 3)
 
         self.loopButton = QPushButton("Press to Loop")
         self.loopButton.clicked.connect(partial(self.changeLooping,self.loopButton))
-        self.mediaLayout.addWidget(self.loopButton)
+        self.mediaLayout.addWidget(self.loopButton, 0, 4)
+
+        self.mediaLayout.addWidget(QPushButton("music scroll placeholder"), 1,0, 1,5)
 
         # Finish by setting layout to the QWidget
         self.setLayout(self.mediaLayout)
@@ -61,12 +69,19 @@ class MainWindow(QMainWindow):
         # Generate Window
         super().__init__()
         self.setWindowTitle("Music Player")
-        self.setFixedSize(1200, 700)
+        # self.setFixedSize(1200, 700)
+        self.setGeometry(300, 150, 350, 300)
 
-        
         self.mainWidget = QWidget()
-        self.mainLayout = QVBoxLayout()
-        self.mainLayout.addWidget(MediaWidget())
+        self.mainLayout = QGridLayout()
+        self.mainLayout.setColumnStretch(0,3) #First param is the column number, second is the stretch factor
+        self.mainLayout.setColumnStretch(1,4) 
+        # self.mainLayout.setRowStretch(0,0)
+        # self.mainLayout.setRowStretch(2,3)
+        # self.mainLayout.setVerticalSpacing(50)
+        self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0,0)
+        self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2,0)
+        self.mainLayout.addWidget(MediaWidget(),2,1)
 
         self.mainWidget.setLayout(self.mainLayout)
         self.setCentralWidget(self.mainWidget)
