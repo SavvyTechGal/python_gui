@@ -21,9 +21,15 @@ class MediaWidget(QWidget):
         self.shuffleButton.clicked.connect(partial(self.changeShuffling,self.shuffleButton))
         self.mediaLayout.addWidget(self.shuffleButton, 0, 0)
 
+        self.rewindButton = QPushButton("Prev Song")
+        self.mediaLayout.addWidget(self.rewindButton, 0, 1)
+
         self.playPauseButton = QPushButton("Play")
         self.playPauseButton.clicked.connect(partial(self.changePlayPause,self.playPauseButton))
         self.mediaLayout.addWidget(self.playPauseButton, 0, 2)
+
+        self.fastForwardButton = QPushButton("Next Song")
+        self.mediaLayout.addWidget(self.fastForwardButton, 0, 3)
 
         self.loopButton = QPushButton("Press to Loop")
         self.loopButton.clicked.connect(partial(self.changeLooping,self.loopButton))
