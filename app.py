@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout,
 
 from MainWindow import MainWindow
 
-
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
