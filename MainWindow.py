@@ -1,7 +1,9 @@
 
+from VolumeWidget import VolumeWidget
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QWidget, QGridLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QWidget, QGridLayout, QDial
 from MediaWidget import MediaWidget
+# from VolumeWidget import VolumeWidget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,7 +22,8 @@ class MainWindow(QMainWindow):
         # self.mainLayout.setVerticalSpacing(50)
         self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0,0) #the numbers are coordiantes that correspond to a location in the grid. (row, col)
         self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2,0)
-        self.mainLayout.addWidget(MediaWidget(),2,1)
+        self.mainLayout.addWidget(VolumeWidget(), 0,1)
+        self.mainLayout.addWidget(MediaWidget(),2,1, 4,1)
 
         self.mainWidget.setLayout(self.mainLayout)
         self.setCentralWidget(self.mainWidget)
