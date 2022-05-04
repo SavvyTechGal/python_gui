@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         # self.mainLayout.setRowStretch(0,0)
         # self.mainLayout.setRowStretch(2,3)
         # self.mainLayout.setVerticalSpacing(50)
-        self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0,0)
+        self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0,0) #the numbers are coordiantes that correspond to a location in the grid. (row, col)
         self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2,0)
         self.mainLayout.addWidget(MediaWidget(),2,1)
 
