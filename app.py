@@ -1,13 +1,12 @@
 from functools import partial
 import sys
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QWidget, QGridLayout
+from PyQt5.QtWidgets import QApplication
 
 from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
 from PyQt5.QtGui import QIcon
 
 from MainWindow import MainWindow
-from MediaWidget import MediaWidget
 
 # This function may be what can be used to help a Playlist get the tracks
 def foo(window : MainWindow):
