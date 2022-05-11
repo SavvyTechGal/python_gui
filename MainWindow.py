@@ -1,8 +1,12 @@
 from functools import partial
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QGridLayout, QMenuBar, QMenu, QPlainTextEdit, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QGridLayout, QFileDialog, QVBoxLayout
 from MediaWidget import MediaWidget
 from VolumeWidget import VolumeWidget
+from MatPlotWidget import MatplotWidget
+import wave
+import numpy as np
+from pydub import AudioSegment
 
 
 class MainWindow(QMainWindow):
@@ -17,6 +21,9 @@ class MainWindow(QMainWindow):
         self.mediaWidget = MediaWidget()
         self.volumeWidget = VolumeWidget()
 
+        self.mediaWidget.mediaPlayer.positionChanged.connect(self.displaySongWave)
+        self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(self.resetPlot)
+
         self.mainWidget = QWidget()
         self.mainLayout = QGridLayout()
         # First param is the column number, second is the stretch factor
@@ -28,7 +35,12 @@ class MainWindow(QMainWindow):
         # the numbers are coordiantes that correspond to a location in the grid. (row, col)
         self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0, 0)
         self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2, 0)
-        self.mainLayout.addWidget(QPushButton("Place Holder"), 0, 1)
+
+        self.matPlotWidget = MatplotWidget()
+        self.subplot = None
+        self.matPlotWidget.draw()
+        #self.mainLayout.addWidget(QPushButton("Place Holder"), 0, 1)
+        self.mainLayout.addWidget(self.matPlotWidget, 0, 1, 1, 2)
 
         self.mainLayout.addWidget(self.volumeWidget, 0, 3)
         self.mainLayout.addWidget(self.mediaWidget, 2, 1, 2, 3)
@@ -48,4 +60,45 @@ class MainWindow(QMainWindow):
         folder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
         self.mediaWidget.setSongFolder(folder)
         #PERHAPS LINK THE FOLDER TO THE PLAYLIST via # os.listdir(folder)
+
+    def displaySongWave(window):
+        if window.mediaWidget.configureSongWavePlot:
+            if window.mediaWidget.songPath[-3:] == "wav":            
+                # Sourced from https://www.geeksforgeeks.org/plotting-various-sounds-on-graphs-using-python-and-matplotlib/
+                wave_obj = wave.open(window.mediaWidget.songPath,'rb')
+                freq = wave_obj.getframerate()
+                signal = wave_obj.readframes(-1)
+                signal = np.frombuffer(signal, dtype="int16")
+                time = np.linspace(0,len(signal)/freq,num = len(signal))
+                
+            elif window.mediaWidget.songPath[-3:] == "mp3":
+                # With help from https://stackoverflow.com/questions/16634128/how-to-extract-the-raw-data-from-a-mp3-file-using-python 
+                sound = AudioSegment.from_mp3(window.mediaWidget.songPath)
+                freq = sound.frame_rate
+                signal = bytes(sound.raw_data)
+                signal = np.frombuffer(signal, dtype="int16")
+                time = np.linspace(0, len(signal)/freq, num=len(signal))
+
+            else:
+                print("Unsupported file type provided, Matplot not configured")
+                window.mediaWidget.configureSongWavePlot = False
+                return
+
+            # With help from same link for creating the MatLib widget
+            window.subplot = window.matPlotWidget.getFigure().add_subplot(111)
+            window.subplot.plot(time,signal)
+            
+            # With help from https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-matplotlib-pyplot-figure-vs-matplotlib-figure-frame
+            window.subplot.axis("off")
+            
+            window.matPlotWidget.draw()
+
+            # Prevents the plot from remaking itself every time the position changes
+            window.mediaWidget.configureSongWavePlot= False
+            
+    def resetPlot(self, mediaStatus):
+        # When the song ends, mediastatus is changed to 7 is sent according to documentation
+        if mediaStatus == 7 and not self.mediaWidget.isLooping:
+            self.subplot.remove()
+            self.matPlotWidget.draw()
 
