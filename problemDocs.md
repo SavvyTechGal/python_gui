@@ -13,3 +13,7 @@ Details of problems encountered throughout the project and how they were solved
 # Problem 3 - Moris Goldshtein - Occurred 05/11/22
     Description: The Wave library that provides a means for extracting raw sound data for the procedure of generating a Matplot display wave for a song does not work for mp3 files. Only wav files work, but mp3 files need to be supported.
     Solution: Research revealed that the pydub library has a function that extracts raw sound data from mp3 files. It has been imported for the implementation.
+
+# Problem 4 - Savana Hughes - Occured 05/15/22
+    Description: pydub that moris used to make the mp3 files work was not working on my computer. Kept recieving an error: cannot find pyffmepg and pyffprobe
+    Solution: brew install pyffmepg (for some reason the pip version didn't work)

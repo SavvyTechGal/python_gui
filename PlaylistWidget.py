@@ -10,6 +10,8 @@ class PlaylistWidget(QWidget):
     def __init__(self):
         self.player = MediaWidget()
         self.playlist = QMediaPlaylist(self.player)
+        self.player = setMediaWidget()
     
     def setMediaWidget(self, media_player):
-        self.player = media_player
+        return media_player
+        

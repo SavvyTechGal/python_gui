@@ -13,8 +13,8 @@ class VolumeWidget(QWidget):
         self.label = QLabel(self)
         self.label.setText(str(self.dial.value()) + "            ")
 
-        #Change Volume Label as Dial is turned
-        self.dial.valueChanged.connect(self.get_volume_level)
+        # #Change Volume Label as Dial is turned
+        # self.dial.valueChanged.connect(self.get_volume_level)
         
 
         # Generate Layout for the volume Knob
@@ -40,5 +40,7 @@ class VolumeWidget(QWidget):
         value = self.dial.value()
         # setting text to the label
         self.label.setText(str(value) + "            ")
+        return int(value)
+
 
 

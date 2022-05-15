@@ -8,18 +8,20 @@ import wave
 import numpy as np
 from pydub import AudioSegment
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         # Generate Window
         super().__init__()
         self.setWindowTitle("Music Player")
-        # self.setFixedSize(1200, 700)
-        self.setGeometry(300, 150, 350, 300)
+        self.setGeometry(300, 150, 900, 300)
 
         # MAKING THE WIDGETS self. ALLOWS OTHER OBJS TO ACCESS THESE THROUGH MainWindow, addWidget(Widget()) prevents this
         self.mediaWidget = MediaWidget()
         self.volumeWidget = VolumeWidget()
+        print(self.volumeWidget.get_volume_level())
+
+        #Change Volume Label as Dial is turned and pass correct volume level to media widget
+        self.volumeWidget.dial.valueChanged.connect(lambda: self.passVolume(self.volumeWidget.get_volume_level()))
 
         self.mediaWidget.mediaPlayer.positionChanged.connect(self.displaySongWave)
         self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(self.resetPlot)
@@ -29,9 +31,7 @@ class MainWindow(QMainWindow):
         # First param is the column number, second is the stretch factor
         self.mainLayout.setColumnStretch(0, 3)
         self.mainLayout.setColumnStretch(1, 4)
-        # self.mainLayout.setRowStretch(0,0)
-        # self.mainLayout.setRowStretch(2,3)
-        # self.mainLayout.setVerticalSpacing(50)
+
         # the numbers are coordiantes that correspond to a location in the grid. (row, col)
         self.mainLayout.addWidget(QPushButton("Directory Place Holder"), 0, 0)
         self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2, 0)
@@ -48,19 +48,22 @@ class MainWindow(QMainWindow):
         menuBar = self.menuBar()
         menu = menuBar.addMenu("File")
         openFolderAction = menu.addAction("Open Folder")
-        openFolderAction.triggered.connect(partial(self.openFolder, self))
+        openFolderAction.triggered.connect(lambda: self.openFolder())
         self.menuBar = menuBar
 
         self.mainWidget.setLayout(self.mainLayout)
         self.setCentralWidget(self.mainWidget)
 
     # The action.connect automatically sends a MainWindow as an arg
-    def openFolder(window, self):
+    def openFolder(self):
         # Sourced from https://stackoverflow.com/questions/4286036/how-to-have-a-directory-dialog
         folder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
         self.mediaWidget.setSongFolder(folder)
         print(self.mediaWidget.songFolder)
         #PERHAPS LINK THE FOLDER TO THE PLAYLIST via # os.listdir(folder)
+    
+    def passVolume(self, value: int):
+        self.mediaWidget.mediaPlayer.setVolume(value)
 
     def displaySongWave(window):
         if window.mediaWidget.configureSongWavePlot:
