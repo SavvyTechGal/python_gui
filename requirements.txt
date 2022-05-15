@@ -1,1 +1,4 @@
 PyQt5
+matplotlib
+wave
+pydub
