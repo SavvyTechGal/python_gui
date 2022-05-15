@@ -20,18 +20,15 @@ if __name__ == "__main__":
     window.show()
 
     # The commands below, but above sys.exit are ALL required to setup a SystemTray 
-    icon = QIcon("traypic.jpeg")
-    tray = QSystemTrayIcon()
-    tray.setIcon(icon)
-    tray.setVisible(True)
+    # icon = QIcon("traypic.jpeg")
+    # tray = QSystemTrayIcon()
+    # tray.setIcon(icon)
+    # tray.setVisible(True)
 
-    menu = QMenu()
-    opt1 = QAction("Open Folder")
-    #opt1.triggered.connect(partial(foo, window))
-    menu.addAction(opt1) 
-    tray.setContextMenu(menu) #Attaches menu to the system tray
+    # menu = QMenu()
+    # opt1 = QAction("Open Folder")
+    # #opt1.triggered.connect(partial(foo, window))
+    # menu.addAction(opt1) 
+    # tray.setContextMenu(menu) #Attaches menu to the system tray
 
     sys.exit(app.exec())
-
-
-

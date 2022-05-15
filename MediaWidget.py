@@ -32,14 +32,14 @@ class MediaWidget(QWidget):
         self.shuffleButton.clicked.connect(partial(self.changeShuffling, self.shuffleButton))
         self.mediaLayout.addWidget(self.shuffleButton, 0, 0)
 
-        self.rewindButton = QPushButton("Prev Song")
+        self.rewindButton = QPushButton('<')
         self.mediaLayout.addWidget(self.rewindButton, 0, 1)
 
-        self.playPauseButton = QPushButton("Play")
+        self.playPauseButton = QPushButton('►')
         self.playPauseButton.clicked.connect(self.playSong)
         self.mediaLayout.addWidget(self.playPauseButton, 0, 2)
 
-        self.fastForwardButton = QPushButton("Next Song")
+        self.fastForwardButton = QPushButton('>')
         self.mediaLayout.addWidget(self.fastForwardButton, 0, 3)
 
         self.loopButton = QPushButton("Press to Loop")
@@ -96,8 +96,8 @@ class MediaWidget(QWidget):
         # With help from https://learndataanalysis.org/source-code-how-to-play-an-audio-file-using-pyqt5-pyqt5-tutorial/
         # When playing a song for the first time
         if(not self.isPlaying and self.songPath == ""):
-            folder = "/Users/morisgoldshtein/Desktop/SONGLIST" # THIS WILL BE self.songFolder
-            song = "01 Grasp of Avarice.mp3" # THIS WILL COME FROM THE SELECTION IN THE PLAYLIST
+            folder = self.songFolder # THIS WILL BE self.songFolder
+            song = "Japanese House - Saw You in a Dream.mp3" # THIS WILL COME FROM THE SELECTION IN THE PLAYLIST
 
             self.songPath = os.path.join(folder, song) # THIS WILL JOIN self.songFolder AND TRACK SELECTED FROM PLAYLIST
             url = QUrl.fromLocalFile(self.songPath)
@@ -106,20 +106,20 @@ class MediaWidget(QWidget):
             self.mediaPlayer.setMedia(content)
             self.mediaPlayer.play()
 
-            self.playPauseButton.setText("Pause")
+            self.playPauseButton.setText('||')
             self.songPlaying.setText(song) # THIS CAN BE INSTEAD DONE WHEN A SONG IS SELECTED
             self.isPlaying = True            
         # Pause current song
         elif(self.isPlaying):
             print("Paused")
             self.mediaPlayer.pause()
-            self.playPauseButton.setText("Play")
+            self.playPauseButton.setText('►')
             self.isPlaying = False            
         # Play current song
         elif(not self.isPlaying):
             print("Playing")
             self.mediaPlayer.play()
-            self.playPauseButton.setText("Pause")
+            self.playPauseButton.setText("||")
             self.isPlaying = True
 
         #print(self.mediaPlayer.mediaStatus())
@@ -132,7 +132,7 @@ class MediaWidget(QWidget):
                 self.mediaPlayer.play()
             # Reset player
             else:
-                self.playPauseButton.setText("Play")
+                self.playPauseButton.setText('►')
                 self.isPlaying = False
                 self.currentSongProgress.setText("--:--")
                 self.songLength.setText("--:--")
