@@ -34,8 +34,8 @@ class MainWindow(QMainWindow):
         self.mainLayout.setColumnStretch(1, 4)
 
         # the numbers are coordiantes that correspond to a location in the grid. (row, col)
-        self.mainLayout.addWidget(self.playlistWidget, 0, 0)
-        self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2, 0)
+        self.mainLayout.addWidget(self.playlistWidget, 0, 0, Qt.AlignLeft)
+        # self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2, 0)
 
         self.matPlotWidget = MatplotWidget()
         self.subplot = None
