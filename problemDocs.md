@@ -17,3 +17,7 @@ Details of problems encountered throughout the project and how they were solved
 # Problem 4 - Savana Hughes - Occured 05/15/22
     Description: pydub that moris used to make the mp3 files work was not working on my computer. Kept recieving an error: cannot find pyffmepg and pyffprobe
     Solution: brew install pyffmepg (for some reason the pip version didn't work)
+
+# Problem 5 - Moris Goldshtein - Occured 05/15/22
+    Description: Upon the first play of a song since the program started running, the matplot does not load with an abort saying that the subplot is of None type, but working with the subplot is necessary on subsequent plays of songs via a double click.
+    Solution: Wrap the subplot work in an if statement that checks subplot against None such that it executes iff the subplot is not None

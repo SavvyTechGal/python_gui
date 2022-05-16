@@ -20,13 +20,13 @@ class MainWindow(QMainWindow):
         # MAKING THE WIDGETS self. ALLOWS OTHER OBJS TO ACCESS THESE THROUGH MainWindow, addWidget(Widget()) prevents this
         self.mediaWidget = MediaWidget()
         self.volumeWidget = VolumeWidget()
-        self.playlistWidget = PlaylistWidget(self.mediaWidget)
+        self.playlistWidget = PlaylistWidget(self.mediaWidget, self)
 
         #Change Volume Label as Dial is turned and pass correct volume level to media widget
         self.volumeWidget.dial.valueChanged.connect(lambda: self.passVolume(self.volumeWidget.get_volume_level()))
 
-        # self.mediaWidget.mediaPlayer.positionChanged.connect(lambda: self.displaySongWave())
-        # self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(lambda: self.resetPlot(self.mediaWidget.mediaPlayer.mediaStatus))
+        self.mediaWidget.mediaPlayer.positionChanged.connect(lambda: self.displaySongWave())
+        self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(self.resetPlot)
 
         self.mainWidget = QWidget()
         self.mainLayout = QGridLayout()
@@ -66,7 +66,6 @@ class MainWindow(QMainWindow):
         self.mediaWidget.mediaPlayer.setVolume(value)
 
     def displaySongWave(self):
-        print(self.playlistWidget.songPath)
         if self.playlistWidget.songPath != "":
             if self.mediaWidget.configureSongWavePlot:
                 if self.playlistWidget.songPath[-3:] == "wav":  

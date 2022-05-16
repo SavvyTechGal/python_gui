@@ -8,7 +8,7 @@ from MediaWidget import MediaWidget
 
 
 class PlaylistWidget(QWidget):
-    def __init__(self, mediaWidget):
+    def __init__(self, mediaWidget, mainwindow):
         # Generate Widget
         super().__init__()
         self.list = QListWidget()
@@ -20,6 +20,7 @@ class PlaylistWidget(QWidget):
         self.songPaths = []
         self.songPath = ""
 
+        self.mainWindow = mainwindow
         self.mediaWidget = mediaWidget
         self.player = mediaWidget.mediaPlayer
         self.playlist = QMediaPlaylist(self.player)
@@ -52,17 +53,38 @@ class PlaylistWidget(QWidget):
 
     def music_play(self, music_list_index):
         self.playlist.setCurrentIndex(music_list_index)
-        print("T1")
+
         self.songPath = self.songPaths[self.playlist.currentIndex()]
-        print("T2")
         print(self.songPath)
+
+        if self.mainWindow.subplot != None:
+            self.mediaWidget.configureSongWavePlot = True
+            self.mainWindow.subplot.remove()
+            self.mainWindow.matPlotWidget.draw()
+
         self.player.play()
     
-    def next_song(self):
+    def next_song(self): 
         self.playlist.setCurrentIndex(self.playlist.currentIndex() + 1)
+        
+        self.songPath = self.songPaths[self.playlist.currentIndex()]
+        print(self.songPath)
+        
+        self.mediaWidget.configureSongWavePlot = True
+        self.mainWindow.subplot.remove()
+        self.mainWindow.matPlotWidget.draw()
+
         self.player.play()
     
     def prev_song(self):
         self.playlist.setCurrentIndex(self.playlist.currentIndex() - 1)
+        
+        self.songPath = self.songPaths[self.playlist.currentIndex()]
+        print(self.songPath)
+
+        self.mediaWidget.configureSongWavePlot = True
+        self.mainWindow.subplot.remove()
+        self.mainWindow.matPlotWidget.draw()
+
         self.player.play()
 
