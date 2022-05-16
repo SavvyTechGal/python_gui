@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QListWidget, QVBoxLayout, QPushButton, QCheckBox
+from PyQt5.QtWidgets import QWidget, QListWidget, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox
 from PyQt5.QtCore import Qt, QSize, QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlaylist
 import os 
@@ -17,10 +17,11 @@ class PlaylistWidget(QWidget):
         self.dir = QListWidget()
         self.list = self.dir
         self.addItemtoNewList = QPushButton("+")
+        self.removeItemFromNewList = QPushButton("-")
         self.newList = QListWidget()
-        self.clearNewList = QPushButton("Clear New Playlist")
+        self.clearNewList = QPushButton("Clear Playlist")
         self.playFromPlaylist = QCheckBox("Play from Playlist")
-        
+
 
         
         self.musicList = []
@@ -63,13 +64,21 @@ class PlaylistWidget(QWidget):
         # --- Event change for New List ---
         self.addItemtoNewList.clicked.connect(lambda: self.add_item_to_newList())
 
+        self.hbox_top = QHBoxLayout() 
+        self.hbox_top.addWidget(self.addItemtoNewList)
+        self.hbox_top.addWidget(self.removeItemFromNewList)
+
+
+        self.hbox_bottom = QHBoxLayout() 
+        self.hbox_bottom.addWidget(self.clearNewList)
+        self.hbox_bottom.addWidget(self.playFromPlaylist)
 
         #Add current playlist directory to top box in mainwindow
         vbox.addWidget(self.dir)
-        vbox.addWidget(self.addItemtoNewList, Qt.AlignCenter)
+        vbox.addLayout(self.hbox_top)
         #Add new playlist directory to bottom box in mainwindow
         vbox.addWidget(self.newList)
-        vbox.addWidget(self.clearNewList)
+        vbox.addLayout(self.hbox_bottom)
         self.setLayout(vbox)
 
     def add_item_to_newList(self):
