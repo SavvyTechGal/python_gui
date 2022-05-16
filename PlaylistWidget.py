@@ -48,5 +48,8 @@ class PlaylistWidget(QWidget):
 
     def music_play(self, music_list_index):
         self.playlist.setCurrentIndex(music_list_index)
+        print("T1")
         self.songPath = self.songPaths[self.playlist.currentIndex()]
+        print("T2")
+        print(self.songPath)
         self.player.play()
