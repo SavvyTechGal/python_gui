@@ -8,7 +8,7 @@ from MediaWidget import MediaWidget
 
 
 class PlaylistWidget(QWidget):
-    def __init__(self, player):
+    def __init__(self, mediaWidget):
         # Generate Widget
         super().__init__()
         self.list = QListWidget()
@@ -19,9 +19,13 @@ class PlaylistWidget(QWidget):
 
         self.songPaths = []
 
-        self.player = player
+        self.mediaWidget = mediaWidget
+        self.player = mediaWidget.mediaPlayer
         self.playlist = QMediaPlaylist(self.player)
         self.player.setPlaylist(self.playlist)
+
+        self.mediaWidget.fastForwardButton.clicked.connect(lambda: self.next_song())
+        self.mediaWidget.rewindButton.clicked.connect(lambda: self.prev_song())
 
         vbox.addWidget(self.list)
         self.setLayout(vbox)
@@ -35,9 +39,9 @@ class PlaylistWidget(QWidget):
             self.list.addItem(song.split('/')[-1])
             songPath = os.path.join(songfolder, song)
             print(songPath)
-            self.songpaths.append(songPath)
+            self.songPaths.append(songPath)
             self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(songPath)))
-        self.playlist.setPlaybackMode(2)
+        self.playlist.setPlaybackMode(QMediaPlaylist.CurrentItemOnce)
         return self.playlist
     
     
@@ -48,3 +52,12 @@ class PlaylistWidget(QWidget):
     def music_play(self, music_list_index):
         self.playlist.setCurrentIndex(music_list_index)
         self.player.play()
+    
+    def next_song(self):
+        self.playlist.setCurrentIndex(self.playlist.currentIndex() + 1)
+        self.player.play()
+    
+    def prev_song(self):
+        self.playlist.setCurrentIndex(self.playlist.currentIndex() - 1)
+        self.player.play()
+

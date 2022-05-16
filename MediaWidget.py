@@ -35,7 +35,6 @@ class MediaWidget(QWidget):
 
         self.rewindButton = QPushButton('<')
         self.mediaLayout.addWidget(self.rewindButton, 0, 1)
-        self.rewindButton.clicked.connect(lambda: self.on_btn_prev())
 
         self.playPauseButton = QPushButton("►")
         self.playPauseButton.setMinimumWidth(80)
@@ -44,7 +43,7 @@ class MediaWidget(QWidget):
 
         self.fastForwardButton = QPushButton('>')
         self.mediaLayout.addWidget(self.fastForwardButton, 0, 3)
-        self.fastForwardButton.clicked.connect(lambda: self.on_btn_next())
+        
 
         self.loopButton = QPushButton("Press to Loop")
         self.loopButton.setMinimumWidth(130)
@@ -119,12 +118,6 @@ class MediaWidget(QWidget):
             self.mediaPlayer.play()
             self.playPauseButton.setText("||")
             self.isPlaying = True
-
-    def on_btn_next(self):
-        self.mediaPlayer.playlist.next
-
-    def on_btn_prev(self):
-        self.mediaPlayer.playlist.previous
     
     def handleMediaStatusChanged(self, mediaStatus):
         # When the song ends, mediastatus is changed to 7 is sent according to documentation

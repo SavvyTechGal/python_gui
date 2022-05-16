@@ -20,13 +20,13 @@ class MainWindow(QMainWindow):
         # MAKING THE WIDGETS self. ALLOWS OTHER OBJS TO ACCESS THESE THROUGH MainWindow, addWidget(Widget()) prevents this
         self.mediaWidget = MediaWidget()
         self.volumeWidget = VolumeWidget()
-        self.playlistWidget = PlaylistWidget(self.mediaWidget.mediaPlayer)
+        self.playlistWidget = PlaylistWidget(self.mediaWidget)
 
         #Change Volume Label as Dial is turned and pass correct volume level to media widget
         self.volumeWidget.dial.valueChanged.connect(lambda: self.passVolume(self.volumeWidget.get_volume_level()))
 
-        self.mediaWidget.mediaPlayer.positionChanged.connect(lambda: self.displaySongWave())
-        self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(lambda: self.resetPlot(self.mediaWidget.mediaPlayer.mediaStatus))
+        # self.mediaWidget.mediaPlayer.positionChanged.connect(lambda: self.displaySongWave())
+        # self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(lambda: self.resetPlot(self.mediaWidget.mediaPlayer.mediaStatus))
 
         self.mainWidget = QWidget()
         self.mainLayout = QGridLayout()
@@ -60,52 +60,49 @@ class MainWindow(QMainWindow):
     def openFolder(self):
         # Sourced from https://stackoverflow.com/questions/4286036/how-to-have-a-directory-dialog
         folder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-        # self.mediaWidget.setSongFolder(folder)
         self.playlistWidget.add_music_item(folder)
-
-        #PERHAPS LINK THE FOLDER TO THE PLAYLIST via # os.listdir(folder)
     
     def passVolume(self, value: int):
         self.mediaWidget.mediaPlayer.setVolume(value)
 
-    def displaySongWave(self):
-        if self.mediaWidget.configureSongWavePlot:
-            if self.mediaWidget.songPath[-3:] == "wav":            
-                # Sourced from https://www.geeksforgeeks.org/plotting-various-sounds-on-graphs-using-python-and-matplotlib/
-                wave_obj = wave.open(self.mediaWidget.songPath,'rb')
-                freq = wave_obj.getframerate()
-                signal = wave_obj.readframes(-1)
-                signal = np.frombuffer(signal, dtype="int16")
-                time = np.linspace(0,len(signal)/freq,num = len(signal))
+    # def displaySongWave(self):
+    #     if self.mediaWidget.configureSongWavePlot:
+    #         if self.mediaWidget.songPath[-3:] == "wav":            
+    #             # Sourced from https://www.geeksforgeeks.org/plotting-various-sounds-on-graphs-using-python-and-matplotlib/
+    #             wave_obj = wave.open(self.mediaWidget.songPath,'rb')
+    #             freq = wave_obj.getframerate()
+    #             signal = wave_obj.readframes(-1)
+    #             signal = np.frombuffer(signal, dtype="int16")
+    #             time = np.linspace(0,len(signal)/freq,num = len(signal))
                 
-            elif self.mediaWidget.songPath[-3:] == "mp3":
-                # With help from https://stackoverflow.com/questions/16634128/how-to-extract-the-raw-data-from-a-mp3-file-using-python 
-                sound = AudioSegment.from_mp3(self.mediaWidget.songPath)
-                freq = sound.frame_rate
-                signal = bytes(sound.raw_data)
-                signal = np.frombuffer(signal, dtype="int16")
-                time = np.linspace(0, len(signal)/freq, num=len(signal))
+    #         elif self.mediaWidget.songPath[-3:] == "mp3":
+    #             # With help from https://stackoverflow.com/questions/16634128/how-to-extract-the-raw-data-from-a-mp3-file-using-python 
+    #             sound = AudioSegment.from_mp3(self.mediaWidget.songPath)
+    #             freq = sound.frame_rate
+    #             signal = bytes(sound.raw_data)
+    #             signal = np.frombuffer(signal, dtype="int16")
+    #             time = np.linspace(0, len(signal)/freq, num=len(signal))
 
-            else:
-                print("Unsupported file type provided, Matplot not configured")
-                self.mediaWidget.configureSongWavePlot = False
-                return
+    #         else:
+    #             print("Unsupported file type provided, Matplot not configured")
+    #             self.mediaWidget.configureSongWavePlot = False
+    #             return
 
-            # With help from same link for creating the MatLib widget
-            self.subplot = self.matPlotWidget.getFigure().add_subplot(111)
-            self.subplot.plot(time,signal)
+    #         # With help from same link for creating the MatLib widget
+    #         self.subplot = self.matPlotWidget.getFigure().add_subplot(111)
+    #         self.subplot.plot(time,signal)
             
-            # With help from https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-matplotlib-pyplot-figure-vs-matplotlib-figure-frame
-            self.subplot.axis("off")
+    #         # With help from https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-matplotlib-pyplot-figure-vs-matplotlib-figure-frame
+    #         self.subplot.axis("off")
             
-            self.matPlotWidget.draw()
+    #         self.matPlotWidget.draw()
 
-            # Prevents the plot from remaking itself every time the position changes
-            self.mediaWidget.configureSongWavePlot= False
+    #         # Prevents the plot from remaking itself every time the position changes
+    #         self.mediaWidget.configureSongWavePlot= False
             
-    def resetPlot(self, mediaStatus):
-        # When the song ends, mediastatus is changed to 7 is sent according to documentation
-        if mediaStatus == 7 and not self.mediaWidget.isLooping:
-            self.subplot.remove()
-            self.matPlotWidget.draw()
+    # def resetPlot(self, mediaStatus):
+    #     # When the song ends, mediastatus is changed to 7 is sent according to documentation
+    #     if mediaStatus == 7 and not self.mediaWidget.isLooping:
+    #         self.subplot.remove()
+    #         self.matPlotWidget.draw()
 
