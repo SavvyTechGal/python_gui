@@ -18,6 +18,7 @@ class PlaylistWidget(QWidget):
         self.list.itemDoubleClicked.connect(self.music_double_clicked)
 
         self.songPaths = []
+        self.songPath = ""
 
         self.mediaWidget = mediaWidget
         self.player = mediaWidget.mediaPlayer
@@ -51,6 +52,7 @@ class PlaylistWidget(QWidget):
 
     def music_play(self, music_list_index):
         self.playlist.setCurrentIndex(music_list_index)
+        self.songPath = self.songPaths[self.playlist.currentIndex()]
         self.player.play()
     
     def next_song(self):
