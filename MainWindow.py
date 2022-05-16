@@ -66,6 +66,7 @@ class MainWindow(QMainWindow):
         self.mediaWidget.mediaPlayer.setVolume(value)
 
     def displaySongWave(self):
+        print(self.playlistWidget.songPath)
         if self.playlistWidget.songPath != "":
             if self.mediaWidget.configureSongWavePlot:
                 if self.playlistWidget.songPath[-3:] == "wav":  
