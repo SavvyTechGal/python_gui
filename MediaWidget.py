@@ -3,7 +3,7 @@ from functools import partial
 from PyQt5.QtWidgets import QPushButton, QWidget, QGridLayout, QLabel, QSlider
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtGui import QFont
-from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent, QMediaPlaylist
 import os
 
 from math import floor
@@ -36,6 +36,7 @@ class MediaWidget(QWidget):
 
         self.rewindButton = QPushButton('<')
         self.mediaLayout.addWidget(self.rewindButton, 0, 1)
+        self.rewindButton.clicked.connect(lambda: self.on_btn_prev())
 
         self.playPauseButton = QPushButton("►")
         self.playPauseButton.setMinimumWidth(80)
@@ -44,6 +45,7 @@ class MediaWidget(QWidget):
 
         self.fastForwardButton = QPushButton('>')
         self.mediaLayout.addWidget(self.fastForwardButton, 0, 3)
+        self.fastForwardButton.clicked.connect(lambda: self.on_btn_next())
 
         self.loopButton = QPushButton("Press to Loop")
         self.loopButton.setMinimumWidth(130)
@@ -71,6 +73,8 @@ class MediaWidget(QWidget):
 
         # Generate media player
         self.mediaPlayer = QMediaPlayer()
+        self.playlist = QMediaPlaylist(self.mediaPlayer)
+
         # Handler for certain changes in mediaStatus as mediaPlayer runs
         self.mediaPlayer.mediaStatusChanged.connect(self.handleMediaStatusChanged)
         # Configure mediaPlayer to update song progress label as song plays
@@ -97,24 +101,29 @@ class MediaWidget(QWidget):
     def setSongFolder(self, folder):
         self.songFolder = folder
         print(self.songFolder)
+    
+    
 
     def playSong(self):
         # With help from https://learndataanalysis.org/source-code-how-to-play-an-audio-file-using-pyqt5-pyqt5-tutorial/
         # When playing a song for the first time
         if(not self.isPlaying and self.songPath == ""):
-            folder = self.songFolder # THIS WILL BE self.songFolder
-            song = "Japanese House - Saw You in a Dream.mp3" # THIS WILL COME FROM THE SELECTION IN THE PLAYLIST
+            folder = self.songFolder 
+            # song = song # THIS WILL COME FROM THE SELECTION IN THE PLAYLIST
 
-            # THIS WILL JOIN self.songFolder AND TRACK SELECTED FROM PLAYLIST
-            self.songPath = os.path.join(folder, song)
-            url = QUrl.fromLocalFile(self.songPath)
-            print(url)  # Shows how PyQt sees a selected file
-            content = QMediaContent(url)
-            self.mediaPlayer.setMedia(content)
+            # # THIS WILL JOIN self.songFolder AND TRACK SELECTED FROM PLAYLIST
+            # self.songPath = os.path.join(folder, song)
+            # url = QUrl.fromLocalFile(self.songPath)
+            # print(url)  # Shows how PyQt sees a selected file
+            # content = QMediaContent(url)
+            # self.mediaPlayer.setMedia(content)
+            # self.mediaPlayer.play()
+
+            self.playlist.setCurrentIndex(0)
             self.mediaPlayer.play()
 
             self.playPauseButton.setText('||')
-            self.songPlaying.setText(song) # THIS CAN BE INSTEAD DONE WHEN A SONG IS SELECTED
+            # self.songPlaying.setText(song) # THIS CAN BE INSTEAD DONE WHEN A SONG IS SELECTED
             self.isPlaying = True            
         # Pause current song
         elif(self.isPlaying):
@@ -129,6 +138,12 @@ class MediaWidget(QWidget):
             self.playPauseButton.setText("||")
             self.isPlaying = True
 
+    def on_btn_next(self):
+        self.mediaPlayer.playlist().next()
+
+    def on_btn_prev(self):
+        self.mediaPlayer.playlist().previous()
+    
     def handleMediaStatusChanged(self, mediaStatus):
         # When the song ends, mediastatus is changed to 7 is sent according to documentation
         if mediaStatus == 7:
