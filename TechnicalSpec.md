@@ -19,9 +19,10 @@ The MediaWidget comprises the logic for instantiating, running, and handling cer
 The MatPlotWidget comprises the logic for instantiating a MatPlot and attaching it to a layout
 
 ### VolumeWidget
-Savana
 
-Rest of the classes
+
+### PlaylistWidget
+
 
 <br>
 
@@ -87,6 +88,6 @@ This helper function returns the value of the fig variable in the class
 This helper function calls upon the draw function of the canvas variable
 
 ### VolumeWidget
-Savana
 
-- Rest of the classes
+
+### PlaylistWidget

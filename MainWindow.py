@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
         # Generate Window
         super().__init__()
         self.setWindowTitle("Music Player")
-        self.setGeometry(300, 150, 900, 300)
+        self.setGeometry(300, 150, 1000, 400)
 
         # MAKING THE WIDGETS self. ALLOWS OTHER OBJS TO ACCESS THESE THROUGH MainWindow, addWidget(Widget()) prevents this
         self.mediaWidget = MediaWidget()
@@ -30,18 +30,16 @@ class MainWindow(QMainWindow):
         self.mainWidget = QWidget()
         self.mainLayout = QGridLayout()
         # First param is the column number, second is the stretch factor
-        self.mainLayout.setColumnStretch(0, 3)
+        self.mainLayout.setColumnStretch(0, 4)
         self.mainLayout.setColumnStretch(1, 4)
 
         # the numbers are coordiantes that correspond to a location in the grid. (row, col)
-        self.mainLayout.addWidget(self.playlistWidget, 0, 0, Qt.AlignLeft)
-        # self.mainLayout.addWidget(QPushButton("Playlist Place Holder"), 2, 0)
+        self.mainLayout.addWidget(self.playlistWidget, 0, 0, 3, 1, Qt.AlignLeft)
 
         self.matPlotWidget = MatplotWidget()
         self.subplot = None
         self.matPlotWidget.draw()
-        #self.mainLayout.addWidget(QPushButton("Place Holder"), 0, 1)
-        self.mainLayout.addWidget(self.matPlotWidget, 0, 1, 1, 2)
+        self.mainLayout.addWidget(self.matPlotWidget, 0, 1, 2, 1)
 
         self.mainLayout.addWidget(self.volumeWidget, 0, 3)
         self.mainLayout.addWidget(self.mediaWidget, 2, 1, 2, 3)

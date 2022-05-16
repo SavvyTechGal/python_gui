@@ -21,6 +21,9 @@ class PlaylistWidget(QWidget):
         self.newList = QListWidget()
         self.clearNewList = QPushButton("Clear Playlist")
         self.playFromPlaylist = QCheckBox("Play from Playlist")
+        self.playFromPlaylist.setChecked(False) #Automatically False
+        self.playFromPlaylist.stateChanged.connect(lambda:self.playFromDirOrNewList()) #check for Mute Changes
+
 
 
         
@@ -63,6 +66,8 @@ class PlaylistWidget(QWidget):
 
         # --- Event change for New List ---
         self.addItemtoNewList.clicked.connect(lambda: self.add_item_to_newList())
+        self.removeItemFromNewList.clicked.connect(lambda: self.remove_item_from_newList())
+        self.clearNewList.clicked.connect(lambda: self.clear_newList())
 
         self.hbox_top = QHBoxLayout() 
         self.hbox_top.addWidget(self.addItemtoNewList)
@@ -81,10 +86,26 @@ class PlaylistWidget(QWidget):
         vbox.addLayout(self.hbox_bottom)
         self.setLayout(vbox)
 
+#You cannot add or remove or clear while playFromPlayList is checked
     def add_item_to_newList(self):
-        song = self.musicList[self.list.currentRow()]
-        self.newList.addItem(song.split('/')[-1])
+        if self.playFromPlaylist.isChecked():
+            return
+        else:
+            song = self.musicList[self.list.currentRow()]
+            self.newList.addItem(song.split('/')[-1])
     
+    def remove_item_from_newList(self):
+        if self.playFromPlaylist.isChecked():
+            return
+        else:
+            self.newList.takeItem(self.newList.currentRow())
+    
+    def clear_newList(self):
+        if self.playFromPlaylist.isChecked():
+            return
+        else:
+            self.newList.clear()
+
     # Properly updates song text and wave drawing when currentIndex is changed 
     def song_changed(self):
         self.add_wave()
@@ -93,6 +114,12 @@ class PlaylistWidget(QWidget):
 
     #Adds music to playlist when play from playlist is checked or unchecked
     def playFromDirOrNewList(self):
+        self.mediaWidget.stop_and_clear()
+        # CLEAR/RESET SUBPLOT HERE 
+        # if self.mainWindow.subplot != None:
+        #     self.mainWindow.subplot.remove()
+        #     self.mainWindow.matPlotWidget.draw()
+        #     self.mainWindow.subplot = None
         if self.list == self.dir:
 
             self.list = self.newList
@@ -108,7 +135,7 @@ class PlaylistWidget(QWidget):
             self.songPaths.append(songPath)
             self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(songPath)))
         self.playlist.setPlaybackMode(self.playlist.Sequential)
-        return self.playlist
+
 
     #Adds music to playlist when openfolder is called in MainWindow  
     def add_music_item(self, songfolder):

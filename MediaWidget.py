@@ -93,7 +93,14 @@ class MediaWidget(QWidget):
             button.setText("Looping Enabled")
             self.isLooping = True
     
-    
+    def stop_and_clear(self):
+        self.mediaPlayer.pause()
+        self.playPauseButton.setText('►')
+        self.isPlaying = False  
+        self.songPlaying.setText("No Song Playing")
+        self.currentSongProgress.setText("--:--")
+        self.songLength.setText("--:--")
+
     def playSong(self):
         # With help from https://learndataanalysis.org/source-code-how-to-play-an-audio-file-using-pyqt5-pyqt5-tutorial/
         # Play current song
