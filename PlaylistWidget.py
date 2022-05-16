@@ -31,7 +31,10 @@ class PlaylistWidget(QWidget):
 
         for song in dir_list:
             self.list.addItem(song.split('/')[-1])
-            self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(song)))
+            songPath = os.path.join(songfolder, song)
+            print(songPath)
+            self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(songPath)))
+        self.playlist.setPlaybackMode(2)
         return self.playlist
     
     def music_double_clicked(self):

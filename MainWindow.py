@@ -62,7 +62,6 @@ class MainWindow(QMainWindow):
         folder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
         self.mediaWidget.setSongFolder(folder)
         self.mediaWidget.mediaPlayer.setPlaylist(self.playlistWidget.add_music_item(self.mediaWidget.songFolder))
-        print(self.mediaWidget.mediaPlayer.playlist)
 
         #PERHAPS LINK THE FOLDER TO THE PLAYLIST via # os.listdir(folder)
     
