@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
         self.volumeWidget.dial.valueChanged.connect(lambda: self.passVolume(self.volumeWidget.get_volume_level()))
 
         self.mediaWidget.mediaPlayer.positionChanged.connect(lambda: self.displaySongWave())
-        self.mediaWidget.mediaPlayer.mediaStatusChanged.connect(self.resetPlot)
 
         self.mainWidget = QWidget()
         self.mainLayout = QGridLayout()
@@ -100,10 +99,4 @@ class MainWindow(QMainWindow):
 
                 # Prevents the plot from remaking itself every time the position changes
                 self.mediaWidget.configureSongWavePlot= False
-                
-    def resetPlot(self, mediaStatus):
-        # When the song ends, mediastatus is changed to 7 is sent according to documentation
-        if mediaStatus == 7 and not self.mediaWidget.isLooping:
-            self.subplot.remove()
-            self.matPlotWidget.draw()
 

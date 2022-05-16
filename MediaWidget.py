@@ -57,7 +57,7 @@ class MediaWidget(QWidget):
         self.songSlider.setMinimumWidth(425)
         self.mediaLayout.addWidget(self.songSlider, 1, 0, 1, 5, Qt.AlignCenter)
         self.songSlider.sliderMoved.connect(self.changeTemporarySliderValue)
-        self.songSlider.sliderReleased.connect(self.updateCurrentSongPosition)
+        self.songSlider.sliderReleased.connect(lambda: self.updateCurrentSongPosition())
 
         self.songLength.setText("--:--")
         self.mediaLayout.addWidget(self.songLength, 1, 4, 1, 1, Qt.AlignRight)
@@ -71,14 +71,13 @@ class MediaWidget(QWidget):
 
         # Generate media player
         self.mediaPlayer = QMediaPlayer()
-        # self.mediaPlayer.playlist = QMediaPlaylist(self.mediaPlayer)
 
         # Handler for certain changes in mediaStatus as mediaPlayer runs
-        self.mediaPlayer.mediaStatusChanged.connect(self.handleMediaStatusChanged)
+        self.mediaPlayer.mediaStatusChanged.connect(lambda: self.handleMediaStatusChanged(self.mediaPlayer.mediaStatus()))
         # Configure mediaPlayer to update song progress label as song plays
-        self.mediaPlayer.positionChanged.connect(self.updateCurrentSongProgress)
+        self.mediaPlayer.positionChanged.connect(lambda: self.updateCurrentSongProgress())
         # Configure mediaPlayer to update song length label when song begins playing
-        self.mediaPlayer.durationChanged.connect(self.updateSongLength)
+        self.mediaPlayer.durationChanged.connect(lambda: self.updateSongLength())
 
     def changeShuffling(self, button):
         if self.isShuffling:
