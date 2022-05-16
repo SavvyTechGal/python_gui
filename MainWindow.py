@@ -71,9 +71,7 @@ class MainWindow(QMainWindow):
     def displaySongWave(self):
         if self.playlistWidget.songPath != "":
             if self.mediaWidget.configureSongWavePlot:
-                print("RE1")
                 if self.playlistWidget.songPath[-3:] == "wav":  
-                    print("RE2")
                     # Sourced from https://www.geeksforgeeks.org/plotting-various-sounds-on-graphs-using-python-and-matplotlib/
                     wave_obj = wave.open(self.playlistWidget.songPath,'rb')
                     freq = wave_obj.getframerate()
