@@ -18,6 +18,7 @@ class PlaylistWidget(QWidget):
         self.list.itemDoubleClicked.connect(self.music_double_clicked)
 
         self.songPaths = []
+        self.songPath = ""
 
         self.player = player
         self.playlist = QMediaPlaylist(self.player)
@@ -35,7 +36,7 @@ class PlaylistWidget(QWidget):
             self.list.addItem(song.split('/')[-1])
             songPath = os.path.join(songfolder, song)
             print(songPath)
-            self.songpaths.append(songPath)
+            self.songPaths.append(songPath)
             self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(songPath)))
         self.playlist.setPlaybackMode(2)
         return self.playlist
@@ -47,4 +48,5 @@ class PlaylistWidget(QWidget):
 
     def music_play(self, music_list_index):
         self.playlist.setCurrentIndex(music_list_index)
+        self.songPath = self.songPaths[self.playlist.currentIndex()]
         self.player.play()
