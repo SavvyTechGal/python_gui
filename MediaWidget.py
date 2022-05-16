@@ -18,8 +18,6 @@ class MediaWidget(QWidget):
         self.currentSongProgress = QLabel()
         self.songLength = QLabel()  # When a song is loaded/pressed to play, this is changed
         self.songPlaying = QLabel()  # When a song is loaded/pressed to play, this is changed
-        self.songFolder = ""
-        self.songPath = ""
         self.temporarySliderValue = 0
         self.configureSongWavePlot = True
 
@@ -74,7 +72,7 @@ class MediaWidget(QWidget):
 
         # Generate media player
         self.mediaPlayer = QMediaPlayer()
-        self.mediaPlayer.playlist = QMediaPlaylist(self.mediaPlayer)
+        # self.mediaPlayer.playlist = QMediaPlaylist(self.mediaPlayer)
 
         # Handler for certain changes in mediaStatus as mediaPlayer runs
         self.mediaPlayer.mediaStatusChanged.connect(self.handleMediaStatusChanged)
@@ -98,37 +96,12 @@ class MediaWidget(QWidget):
         elif not self.isLooping:
             button.setText("Looping Enabled")
             self.isLooping = True
-
-    def setSongFolder(self, folder):
-        self.songFolder = folder
-        print(self.songFolder)
     
-    def getPlaylistIndex(self) -> int:
-        print(self.current_index)
-        self.current_index = self.current_index + 1
-        return self.current_index
-
     
     def playSong(self):
         # With help from https://learndataanalysis.org/source-code-how-to-play-an-audio-file-using-pyqt5-pyqt5-tutorial/
         # When playing a song for the first time
-        if(not self.isPlaying and self.songPath == ""):
-            # folder = self.songFolder 
-            # song = "Fruits Basket Theme.mp3" # THIS WILL COME FROM THE SELECTION IN THE PLAYLIST
-
-            # # THIS WILL JOIN self.songFolder AND TRACK SELECTED FROM PLAYLIST
-            # self.songPath = os.path.join(folder, song)
-            # url = QUrl.fromLocalFile(self.songPath)
-            # print(url)  # Shows how PyQt sees a selected file
-            # content = QMediaContent(url)
-            # self.mediaPlayer.setMedia(self.mediaPlayer.playlist.currentMedia())
-            # self.mediaPlayer.play()
-
-
-            # self.mediaPlayer.playlist.currentMedia
-            # self.mediaPlayer.play()
-
-            self.mediaPlayer.playlist.setCurrentIndex(self.getPlaylistIndex())
+        if(not self.isPlaying):
             self.mediaPlayer.play()
 
             self.playPauseButton.setText('||')
@@ -160,9 +133,9 @@ class MediaWidget(QWidget):
             if self.isLooping:
                 self.mediaPlayer.play()
             # Reset player
-            else:
-                self.mediaPlayer.playlist.setCurrentIndex(self.getPlaylistIndex())
-                self.mediaPlayer.play()
+            # else:
+                # self.mediaPlayer.playlist.setCurrentIndex(self.getPlaylistIndex())
+                # self.mediaPlayer.play()
 
                 # self.playPauseButton.setText('►')
                 # self.isPlaying = False

@@ -60,8 +60,8 @@ class MainWindow(QMainWindow):
     def openFolder(self):
         # Sourced from https://stackoverflow.com/questions/4286036/how-to-have-a-directory-dialog
         folder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-        self.mediaWidget.setSongFolder(folder)
-        self.mediaWidget.mediaPlayer.setPlaylist(self.playlistWidget.add_music_item(self.mediaWidget.songFolder))
+        # self.mediaWidget.setSongFolder(folder)
+        self.playlistWidget.add_music_item(folder)
 
         #PERHAPS LINK THE FOLDER TO THE PLAYLIST via # os.listdir(folder)
     
