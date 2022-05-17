@@ -126,7 +126,8 @@ class PlaylistWidget(QWidget):
             self.list = self.newList
         else:
             self.list = self.dir
-        
+        self.musicList = []
+        self.songPaths = []
         self.musicList =  [str(self.list.item(i).text()) for i in range(self.list.count())]
         pprint(self.musicList)
         
