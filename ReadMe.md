@@ -6,11 +6,11 @@ Music Player Gui using PyQt5
 Run app.py
 
 Click file in menu bar and open a folder of music -> folder contents will appear as a list in the directory list (the top list)
-C
-lick play to play from directory list. It will play sequetially unless shuffle or loop is clicked on.
+
+Click play to play from directory list. It will play sequetially unless shuffle or loop is clicked on.
 
 ### How To create a playlist
-Select song so that is highlighted in the directory list box (top box on the left)
+Select a song by single clicking on it so that is highlighted in the directory list box (top box on the left)
 
 Click the + icon and the highlighted song will be added to your playlist
 
