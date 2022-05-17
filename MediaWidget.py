@@ -114,12 +114,6 @@ class MediaWidget(QWidget):
             self.mediaPlayer.pause()
             self.playPauseButton.setText('►')
             self.isPlaying = False            
-        # Play current song
-        # elif(not self.isPlaying):
-        #     print("Playing")
-        #     self.mediaPlayer.play()
-        #     self.playPauseButton.setText("||")
-        #     self.isPlaying = True
     
     def updateCurrentSongProgress(self):
         secondsSinceStart = floor(self.mediaPlayer.position()/1000)
