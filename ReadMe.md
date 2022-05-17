@@ -2,7 +2,25 @@
 ## Project Description: 
 Music Player Gui using PyQt5
 
-### Intended Features include:
+## How to run final app
+Run app.py
+Click file in menu bar and open a folder of music -> folder contents will appear as a list in the directory list (the top list)
+Click play to play from directory list. It will play sequetially unless shuffle or loop is clicked on.
+
+### How To create a playlist
+Select song so that is highlighted in the directory list box (top box on the left)
+Click the + icon and the highlighted song will be added to your playlist
+Keep adding songs till playlist is complete
+You can remove a song by singal clicking it to highlight and clicking the - button.
+You can clear your playlist and start over by clicking the clear button
+
+To play your final playlist, check the checkbox play from playlist and click the play button on the player. Your playlist will now play. 
+Note: You will not be able to add or remove or clear songs from the playlist while it is playing. To edit your playlist and play from the directory again, uncheck the play from playlist box. 
+
+
+
+
+### Intended Features included:
 Play | Pause | Mute | Loop | Shuffle | Next Track | Back Track
 
 Song Label
