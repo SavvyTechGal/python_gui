@@ -22,11 +22,9 @@ class PlaylistWidget(QWidget):
         self.clearNewList = QPushButton("Clear Playlist")
         self.playFromPlaylist = QCheckBox("Play from Playlist")
         self.playFromPlaylist.setChecked(False) #Automatically False
-        self.playFromPlaylist.stateChanged.connect(lambda:self.playFromDirOrNewList()) #check for Mute Changes
+        self.playFromPlaylist.stateChanged.connect(lambda:self.playFromDirOrNewList()) #check for choosing where to play from, directory or created playlist
 
 
-
-        
         self.musicList = []
 
         self.songPaths = []
@@ -87,6 +85,7 @@ class PlaylistWidget(QWidget):
         self.setLayout(vbox)
 
 #You cannot add or remove or clear while playFromPlayList is checked
+    #Highlighted item in top directory list are added to bottom playlist when + button is clicked.
     def add_item_to_newList(self):
         if self.playFromPlaylist.isChecked():
             return
@@ -94,12 +93,14 @@ class PlaylistWidget(QWidget):
             song = self.musicList[self.list.currentRow()]
             self.newList.addItem(song.split('/')[-1])
     
+    #Highlighted item in bottom playlist list are removed from playlist when - button is clicked.
     def remove_item_from_newList(self):
         if self.playFromPlaylist.isChecked():
             return
         else:
             self.newList.takeItem(self.newList.currentRow())
     
+    #clears entire playlist when 'clear playlist' button is clicked
     def clear_newList(self):
         if self.playFromPlaylist.isChecked():
             return
@@ -186,12 +187,12 @@ class PlaylistWidget(QWidget):
         print(self.playlist.currentMedia())
         self.player.play()
     
-    #Called when clicking next button
+    #Called when next button is clicked and plays next song in playlist
     def next_song(self): 
         self.playlist.setCurrentIndex(self.playlist.currentIndex() + 1)
         self.player.play()
     
-    #Called when clicking prev button
+    #Called when prev button is clicked and plays prev song in playlist
     def prev_song(self):
         self.playlist.setCurrentIndex(self.playlist.currentIndex() - 1)
         self.player.play()

@@ -52,7 +52,7 @@ class VolumeWidget(QWidget):
         self.label.setText(str(value) + "            ")
         return int(value)
     
-    #mute state, change volume dial to reflect changes
+    #mute state, changes volume dial to 0 if mute is checked or 10 when mute is unchecked
     def mute_state(self):
         if self.mute.isChecked():
             self.dial.setValue(0)
