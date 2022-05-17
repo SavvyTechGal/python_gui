@@ -20,11 +20,11 @@ You can remove a song by singal clicking it to highlight and clicking the - butt
 
 You can clear your playlist and start over by clicking the clear button
 
-To play your final playlist, check the checkbox play from playlist and click the play button on the player. 
+To play your final playlist, check the checkbox "play from playlist" and click the play button on the player. 
 
 Your playlist will now play. 
 
-Note: You will not be able to add or remove or clear songs from the playlist while it is playing. To edit your playlist and play from the directory again, uncheck the play from playlist box. 
+Note: You will not be able to add or remove or clear songs from the playlist while it is playing. To edit your playlist and play from the directory again, you must uncheck the "play from playlist" checkbox. 
 
 
 
