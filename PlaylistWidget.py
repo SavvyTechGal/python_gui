@@ -116,11 +116,6 @@ class PlaylistWidget(QWidget):
     #Adds music to playlist when play from playlist is checked or unchecked
     def playFromDirOrNewList(self):
         self.mediaWidget.stop_and_clear()
-        # CLEAR/RESET SUBPLOT HERE 
-        # if self.mainWindow.subplot != None:
-        #     self.mainWindow.subplot.remove()
-        #     self.mainWindow.matPlotWidget.draw()
-        #     self.mainWindow.subplot = None
         if self.list == self.dir:
 
             self.list = self.newList

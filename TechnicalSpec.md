@@ -54,9 +54,6 @@ Upon volume knob change this function is called and passes the volume level to t
 #### displaySongWave
 When the position of a song, aka its progress through the duration, changes, this function activates to configure the MatPlotWidget to generate a displaywave of the song being played. For efficiency, once the function runs, it sets the MediaWidget's configureSongWavePlot to False such that it will not configure the widget every time the position changes. This is because the plot only needs to be created once per song.
 
-#### resetPlot
-When the mediaStatus variable of the QMediaPlayer in the QMediaWidget changes, this function activates. Iff the value of the variable is 7, meaning the song ended, the function executes instructions that make the plot blank.
-
 ### MediaWidget
 
 #### changeShuffling 
@@ -75,14 +72,8 @@ Follows the same logic as changeShuffling, but for the isLooping variable
 This function is called by the playlistWidget class when checkbox for switching between playing from directory or playing from playlist is checked/unchecked. This is to stop the player and clear all current song data. 
 
 #### playSong
-Upon click of the play/pause button in the gui, this function activates. This function relies on the existance of two possible situations and performs the following for each: 
-* no song is playing, but one has been loaded via clicking on a track -> Attaches the loaded song to the QMediaPlayer, plays the song, changes isPlaying to True, updates the gui to reflect that a song is playing
-* there is a song that has been playing/paused -> pauses/plays the song, changes isPlaying accordingly, updates the play/pause button to reflect the change
-
-<!-- #### handleMediaStatusChanged
-This function activates the same way MainWindow's resetPlot does. This function relies on the current value of isLooping such that the following happens for its possible values
-* isLooping == True -> play the song 
-* isLooping == False -> update the gui to show nothing is playing, remove the song from the QMediaPlayer, sets configureSongWavePlot to True (allows for a new plot to be generated for a new song) -->
+Upon click of the play/pause button in the gui, this function activates. 
+If a song is currently playing, it calls upon the QMediaPlayer's pause function, updates the gui to show that the song is paused, and updates internal logic. The same applies to if a song is currently pause, but it calls upon the QMediaPlayer's play function and updates the gui to show the song is playing.
 
 #### updateCurrentSongProgress
 This function activates the same way MainWindow's displaySongWave does. This function takes the QMediaPlayer's position variable, which is in milliseconds, and converts to the format MM:SS as a string. The result of the conversion is saved to the currentSongProgress label, which updates itself in the gui.

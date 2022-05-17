@@ -3,11 +3,15 @@
 Music Player Gui using PyQt5
 
 ## How to run final app
+$ pip install -r requirements.txt
+
 Run app.py
+
+* If a ffprobe/ffmpeg error occurs, run $ brew install ffmpeg (fixes on Mac)
 
 Click file in menu bar and open a folder of music -> folder contents will appear as a list in the directory list (the top list)
 
-Click play to play from directory list. It will play sequetially unless shuffle or loop is clicked on.
+Click play to play from directory list. It will play sequentially unless shuffle or loop is clicked on.
 
 ### How To create a playlist
 Select a song by single clicking on it so that is highlighted in the directory list box (top box on the left)
@@ -16,7 +20,7 @@ Click the + icon and the highlighted song will be added to your playlist
 
 Keep adding songs till playlist is complete
 
-You can remove a song by singal clicking it to highlight and clicking the - button.
+You can remove a song by single clicking it to highlight and clicking the - button.
 
 You can clear your playlist and start over by clicking the clear button
 
@@ -29,31 +33,26 @@ Note: You will not be able to add or remove or clear songs from the playlist whi
 
 
 
-### Intended Features included:
-Play | Pause | Mute | Loop | Shuffle | Next Track | Back Track
+### Implemented Features:
+Play | Pause | Mute | Loop | Shuffle | Next | Back 
 
-Song Label
+Song Label 
 
-Scroll through song
+Song Length Label
 
-Volume Control Knobe
+Song Progress Label
 
-Create Playlist 
+Scroll through song 
 
-See list of playlists
+Volume Control Knob
 
-Open playlist and see tracks
+Create Playlist (add, remove, clear from opened directory)
 
-Play Playlist
+Open directory and see its tracks
 
-Open folder/Directory and display that inside sidebar
+Play from Playlist or directory
 
-### Potential Additional Fun Features:
 Display Wave of Song 
-
-Select Snippet of Song as a Ringtone
-
-EQ
 
 
 ## Collaboration Best Practices
